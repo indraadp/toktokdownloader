@@ -45,12 +45,12 @@ header p {
 form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px;
   margin-bottom: 12px;
 }
 
 label {
-  font-size: 13px;
+  font-size: 14px;
   color: #212730;
 }
 
@@ -201,7 +201,7 @@ video {
 }
 
 footer {
-  margin-top: 1.5em;
+  margin-top: 2.5em;
   font-size: 14px;
   color: #212730;
   text-align: center;
@@ -209,7 +209,7 @@ footer {
 
 footer .credit {
   font-weight: 600;
-  margin-top: 5em;
+  margin-top: 3em;
 }
 
 footer a {
@@ -308,7 +308,7 @@ body[data-theme="dark"] .btn-download {
 }
 
 body[data-theme="dark"] .status {
-  color: #ff4242;
+  color: #eaff00;
 }
 
 body[data-theme="dark"] .switch-theme-btn {
