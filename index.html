@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Toktokder - TikTok Downloader</title>
+  <title>Toktokdownloader - TikTok Downloader</title>
 
   <link href="/favicon/icon32.png" rel="icon" sizes="32x32"/>
   <link href="/favicon/icon192.png" rel="icon" sizes="192x192"/>  
@@ -24,7 +24,7 @@
 
   <div class="card">
     <header>
-      <h1>Toktokder</h1>
+      <h1>Toktokdownloader</h1>
       <p>Paste link TikTok pada kolom di bawah ini, lalu klik <b>Download Video</b>.<br/>GRATIS TANPA WATERMARK.</p>
     </header>
 
@@ -43,9 +43,13 @@
       <div id="status" class="status"></div>
 
       <div id="result" class="result hidden">
-        <h2>Video siap di-download</h2>
+        <h2>Video siap di-download ✔</h2>
         <video id="preview" controls></video>
-        <a id="download-link" href="#" download>Download Video</a>
+  <div class="download-wrapper">
+    <button id="download-now" class="btn-download" type="button">
+      Download Video
+    </button>
+  </div>
       </div>
     </main>
 
