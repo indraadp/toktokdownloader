@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const videoEl = document.getElementById("preview");
   const downloadNowBtn = document.getElementById("download-now");
 
-  // helper: filename dari url
   function filenameFromUrl(url) {
     try {
       const u = new URL(url);
@@ -19,37 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function downloadVideoFromUrl(url, suggestedFilename) {
-    try {
-      if (statusEl) statusEl.textContent = "Mengunduh...";
-      downloadNowBtn.disabled = true;
+  function triggerProxyDownload(proxyUrl, suggestedFilename) {
+    const a = document.createElement("a");
+    a.href = proxyUrl;
+    a.setAttribute("download", suggestedFilename || "");
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
-      const res = await fetch(url, { mode: "cors" });
-      if (!res.ok) throw new Error("Gagal mengunduh (status " + res.status + ")");
-
-      const blob = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = blobUrl;
-      a.download = suggestedFilename || filenameFromUrl(url);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      setTimeout(() => {
-        URL.revokeObjectURL(blobUrl);
-        if (statusEl) statusEl.textContent = "";
-        downloadNowBtn.disabled = false;
-      }, 500);
-    } catch (err) {
-      console.warn("Fetch download gagal:", err);
-      if (statusEl) statusEl.textContent = "Gagal download langsung — membuka tab baru...";
-      window.open(url, "_blank");
-      downloadNowBtn.disabled = false;
-
-      setTimeout(() => (statusEl.textContent = ""), 1500);
-    }
+  if (!form || !input) {
+    console.error("Form atau input tidak ditemukan.");
+    return;
   }
 
   form.addEventListener("submit", async (e) => {
@@ -60,29 +41,34 @@ document.addEventListener("DOMContentLoaded", () => {
     // reset UI
     resultEl.classList.add("hidden");
     downloadNowBtn.style.display = "none";
-    downloadNowBtn.disabled = true;
     statusEl.textContent = "Sedang mengambil video...";
+    downloadNowBtn.disabled = true;
 
     try {
-      const res = await fetch("/api/download", {
+      const resp = await fetch("/api/download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: tiktokUrl })
+        body: JSON.stringify({ url: tiktokUrl }),
       });
 
-      if (!res.ok) throw new Error("Gagal terhubung ke server.");
+      if (!resp.ok) throw new Error("Gagal menghubungi server.");
 
-      const data = await res.json();
+      const data = await resp.json();
       if (!data.success) throw new Error(data.message || "Gagal memproses link.");
 
       const videoUrl = data.downloadUrl;
-      if (!videoUrl) throw new Error("URL video tidak ditemukan.");
+      const proxyUrl = data.proxyUrl || ("/api/proxy?url=" + encodeURIComponent(videoUrl));
 
-      videoEl.src = videoUrl;
-      videoEl.load();
+      if (!videoUrl) throw new Error("Server tidak mengembalikan video URL.");
 
-      // tampilkan tombol unduh
-      downloadNowBtn.dataset.src = videoUrl;
+      // set preview
+      if (videoEl) {
+        videoEl.src = videoUrl;
+        videoEl.load();
+      }
+
+      // set proxy link for download
+      downloadNowBtn.dataset.proxy = proxyUrl;
       downloadNowBtn.dataset.filename = filenameFromUrl(videoUrl);
       downloadNowBtn.style.display = "inline-block";
       downloadNowBtn.disabled = false;
@@ -95,10 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  downloadNowBtn.addEventListener("click", async () => {
-    const url = downloadNowBtn.dataset.src || videoEl.src;
-    if (!url) return;
-    const filename = downloadNowBtn.dataset.filename || filenameFromUrl(url);
-    await downloadVideoFromUrl(url, filename);
+  downloadNowBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const proxy = downloadNowBtn.dataset.proxy;
+    const filename = downloadNowBtn.dataset.filename || "";
+    if (!proxy) return;
+    statusEl.textContent = "Menyiapkan download...";
+    downloadNowBtn.disabled = true;
+
+    try {
+      triggerProxyDownload(proxy, filename);
+    } finally {
+      downloadNowBtn.disabled = false;
+      statusEl.textContent = "";
+    }
   });
 });

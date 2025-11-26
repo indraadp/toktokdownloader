@@ -1,3 +1,4 @@
+// /api/download.js
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, message: "Method not allowed" });
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Contoh pakai tikwm.com API publik
+    // pake tikwm.com API publik seperti sebelumnya
     const apiUrl = "https://www.tikwm.com/api/?url=" + encodeURIComponent(url);
 
     const response = await fetch(apiUrl, {
@@ -19,6 +20,7 @@ export default async function handler(req, res) {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
           "(KHTML, like Gecko) Chrome/119.0 Safari/537.36",
       },
+      redirect: "follow",
     });
 
     if (!response.ok) {
@@ -32,10 +34,12 @@ export default async function handler(req, res) {
     }
 
     const downloadUrl = json.data.play; // direct link video (tanpa watermark)
+    const proxyUrl = "/api/proxy?url=" + encodeURIComponent(downloadUrl);
 
     return res.status(200).json({
       success: true,
       downloadUrl,
+      proxyUrl,
     });
   } catch (err) {
     console.error(err);
