@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Toktokder - TikTok Downloader</title>
+
+  <link href="/favicon/icon32.png" rel="icon" sizes="32x32"/>
+  <link href="/favicon/icon192.png" rel="icon" sizes="192x192"/>  
+
+  <meta name="description" content="Download video TikTok tanpa watermark, cepat dan gratis.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+  <div class="top-actions">
+    <button id="modeToggle" class="action-btn" aria-label="switch theme">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="card">
+    <header>
+      <h1>Toktokder</h1>
+      <p>Paste link TikTok pada kolom di bawah ini, lalu klik <b>Download Video</b>.<br/>GRATIS TANPA WATERMARK.</p>
+    </header>
+
+    <main>
+      <form id="download-form">
+        <label for="tiktok-url">Link video TikTok</label>
+        <input
+          id="tiktok-url"
+          type="url"
+          placeholder="https://www.tiktok.com/@user/video/123..."
+          required
+        />
+        <button type="submit" id="download-btn">Download Video</button>
+      </form>
+
+      <div id="status" class="status"></div>
+
+      <div id="result" class="result hidden">
+        <h2>Video siap di-download</h2>
+        <video id="preview" controls></video>
+        <a id="download-link" href="#" download>Download Video</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Gunakan dengan bijak dan tetap patuhi aturan <a href="https://www.tiktok.com/legal/page/row/terms-of-service/id" target="_blank" rel="nofollow noopener">Terms of Service TikTok</a>.
+      </p>
+
+      <div class="credit">
+        <p>
+          source by. <a href="https://github.com/Gtid-tech" target="_blank" rel="nofollow noopener">GTID-TECH</a>
+          — modified by. <a href="https://indradp.web.id/" target="_blank" rel="nofollow noopener">Indra DP</a>
+        </p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+
+  <script>
+    const btn = document.getElementById('modeToggle');
+    const icon = btn.querySelector('i');
+    const root = document.body;
+
+    btn.addEventListener('click', () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+
+      if (isDark) {
+        root.removeAttribute('data-theme');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      }
+    });
+  </script>
+
+</body>
+</html>

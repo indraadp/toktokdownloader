@@ -1,0 +1,252 @@
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #dbeafe, #eff6ff);
+  color: #1e293b;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px 20px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+
+header h1 {
+  margin: 10px auto 2em;
+  font-size: 26px;
+  text-align: center;
+  color: #0f172a;
+}
+
+header p {
+  margin: 4px 0 3em;
+  text-align: center;
+  color: #475569;
+  font-size: 14px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+label {
+  font-size: 13px;
+  color: #475569;
+}
+
+input[type="url"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #94a3b8;
+  background: #f8fafc;
+  color: #1e293b;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+input[type="url"]:focus {
+  border-color: #3b82f6;
+  background: #ffffff;
+}
+
+button {
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(to right, #3b82f6, #60a5fa);
+  color: white;
+  transition: opacity 0.2s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.status {
+  min-height: 20px;
+  font-size: 13px;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.result.hidden {
+  display: none;
+}
+
+.result {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #cbd5e1;
+}
+
+.result h2 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+video {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: #e2e8f0;
+}
+
+#download-link {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: #22c55e;
+  color: #022c22;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+footer {
+  margin-top: 1.5em;
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+}
+
+footer .credit {
+  margin-top: 5em;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+input[type="url"]:hover {
+  border-color: #60a5fa;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+#download-link:hover {
+  background: #16a34a;
+  color: #022c22;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* TOGGLE SWITCH THEME */
+.top-actions {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+}
+
+.action-btn {
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: #1e293b;
+}
+
+.action-btn i {
+  font-size: 22px;
+}
+
+.action-btn:hover {
+  transform: scale(1.07);
+}
+
+body[data-theme="dark"] {
+  background: #090f2a;
+  color: #f1f5f9;
+}
+
+body[data-theme="dark"] .card {
+  background: rgba(255,255,255,0.05);
+  color: #f1f5f9;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.6);
+}
+
+body[data-theme="dark"] header h1,
+body[data-theme="dark"] header p,
+body[data-theme="dark"] label,
+body[data-theme="dark"] .result h2,
+body[data-theme="dark"] footer {
+  color: #f1f5f9;
+}
+
+body[data-theme="dark"] input[type="url"] {
+  background: #0b1233;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body[data-theme="dark"] input[type="url"]:focus {
+  background: #0d1440;
+  border-color: #818cf8;
+}
+
+body[data-theme="dark"] button {
+  background: linear-gradient(to right,#4f46e5,#9333ea);
+  color: #ffffff;
+}
+
+body[data-theme="dark"] #download-link {
+  background: #22c55e;
+  color: #022c22;
+}
+
+body[data-theme="dark"] .action-btn {
+  background: rgba(9,15,42,0.7);
+  border: 1px solid rgba(100, 100, 100, 0.358);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  color: #f8fafc;
+}
+
+body[data-theme="dark"] .action-btn i {
+  color: #f8fafc;
+}
+
+body[data-theme="dark"] a {
+  color: #93c5fd;
+}
+
+body[data-theme="dark"] a:hover {
+  color: #60a5fa;
+}
+
