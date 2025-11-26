@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="id">
+
+<script>
+  (function(){
+    // baca cookie site_theme (fast minimal)
+    const m = document.cookie.match('(?:^|; )site_theme=([^;]*)');
+    const theme = m ? decodeURIComponent(m[1]) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme','dark');
+      try{ document.body && document.body.setAttribute('data-theme','dark'); }catch(e){}
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      try{ document.body && document.body.removeAttribute('data-theme'); }catch(e){}
+    }
+  })();
+</script>
+
 <head>
   <meta charset="UTF-8" />
   <title>Toktokdownloader - TikTok Downloader</title>
-
   <link href="/favicon/icon32.png" rel="icon" sizes="32x32"/>
   <link href="/favicon/icon192.png" rel="icon" sizes="192x192"/>  
-
   <meta name="description" content="Download video TikTok tanpa watermark, cepat dan gratis.">
+  <meta name="robots" content="nofollow, noindex, noimageindex, noarchive, nosnippet"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link rel="stylesheet" href="/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
 
-  <div class="top-actions">
-    <button id="modeToggle" class="action-btn" aria-label="switch theme">
+  <div class="switch-theme">
+    <button id="modeToggle" class="switch-theme-btn" aria-label="switch theme">
       <i class="fa-solid fa-moon"></i>
     </button>
   </div>
 
   <div class="card">
     <header>
-      <h1>Toktokdownloader</h1>
-      <p>Paste link TikTok pada kolom di bawah ini, lalu klik <b>Download Video</b>.<br/>GRATIS TANPA WATERMARK.</p>
+      <h1><span>Toktok</span>downloader</h1>
+      <p>Download video TikTok<br/>
+      TANPA WATERMARK, CEPAT, dan GRATIS!!!</p>
     </header>
 
     <main>
       <form id="download-form">
-        <label for="tiktok-url">Link video TikTok</label>
+        <label for="tiktok-url">Paste link TikTok pada kolom di bawah ini, lalu klik <b>Download Video</b>.</label>
         <input
           id="tiktok-url"
           type="url"
-          placeholder="https://www.tiktok.com/@user/video/123..."
+          placeholder="https://vt.tiktok.com/ZSfPc62yc/"
           required
         />
         <button type="submit" id="download-btn">Download Video</button>
@@ -43,7 +58,7 @@
       <div id="status" class="status"></div>
 
       <div id="result" class="result hidden">
-        <h2>Video siap di-download ✔</h2>
+        <h2>Video siap di-Download <span style="color: #2bff00;">✔</span></h2>
         <video id="preview" controls></video>
   <div class="download-wrapper">
     <button id="download-now" class="btn-download" type="button">
@@ -69,25 +84,66 @@
 
   <script src="/script.js"></script>
 
-  <script>
-    const btn = document.getElementById('modeToggle');
-    const icon = btn.querySelector('i');
-    const root = document.body;
+ <script>
+  /* ------------------------------
+      Helper Cookie Functions
+  ------------------------------ */
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+  }
 
-    btn.addEventListener('click', () => {
-      const isDark = root.getAttribute('data-theme') === 'dark';
+  function getCookie(name) {
+    const match = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+    return match ? decodeURIComponent(match[1]) : null;
+  }
 
-      if (isDark) {
-        root.removeAttribute('data-theme');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      } else {
-        root.setAttribute('data-theme', 'dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      }
-    });
-  </script>
+  /* ------------------------------
+      Apply Theme From Cookie on Load
+  ------------------------------ */
+  const savedTheme = getCookie("site_theme"); // "dark" or "light"
+  const root = document.body;
+
+  if (savedTheme === "dark") {
+    root.setAttribute("data-theme", "dark");
+  } else {
+    // default light
+    root.removeAttribute("data-theme");
+  }
+
+  /* ------------------------------
+      Toggle Logic + Save to Cookie
+  ------------------------------ */
+  const btn = document.getElementById('modeToggle');
+  const icon = btn.querySelector('i');
+
+  // Set initial icon based on loaded theme
+  function updateIcon() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    icon.classList.remove("fa-moon", "fa-sun");
+    icon.classList.add(isDark ? "fa-sun" : "fa-moon");
+  }
+  updateIcon();
+
+  btn.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+
+    if (isDark) {
+      // Switch to light mode
+      root.removeAttribute('data-theme');
+      setCookie("site_theme", "light", 365);
+    } else {
+      // Switch to dark mode
+      root.setAttribute('data-theme', 'dark');
+      setCookie("site_theme", "dark", 365);
+    }
+
+    updateIcon();
+  });
+</script>
+
 
 </body>
 </html>

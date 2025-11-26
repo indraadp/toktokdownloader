@@ -27,14 +27,19 @@ header h1 {
   margin: 10px auto 2em;
   font-size: 26px;
   text-align: center;
-  color: #0f172a;
+  color: #212730;
+}
+
+header h1 span {
+  color: #3b82f6;
 }
 
 header p {
   margin: 4px 0 3em;
   text-align: center;
-  color: #475569;
-  font-size: 14px;
+  color: #212730;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 form {
@@ -46,7 +51,7 @@ form {
 
 label {
   font-size: 13px;
-  color: #475569;
+  color: #212730;
 }
 
 input[type="url"] {
@@ -151,11 +156,12 @@ video {
 footer {
   margin-top: 1.5em;
   font-size: 14px;
-  color: #64748b;
+  color: #212730;
   text-align: center;
 }
 
 footer .credit {
+  font-weight: 600;
   margin-top: 5em;
 }
 
@@ -185,14 +191,14 @@ footer a:hover {
 }
 
 /* TOGGLE SWITCH THEME */
-.top-actions {
+.switch-theme {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 200;
 }
 
-.action-btn {
+.switch-theme-btn {
   width: 45px;
   height: 45px;
   border: none;
@@ -208,11 +214,11 @@ footer a:hover {
   color: #1e293b;
 }
 
-.action-btn i {
+.switch-theme-btn i {
   font-size: 22px;
 }
 
-.action-btn:hover {
+.switch-theme-btn:hover {
   transform: scale(1.07);
 }
 
@@ -236,6 +242,10 @@ body[data-theme="dark"] footer {
   color: #f1f5f9;
 }
 
+body[data-theme="dark"] header h1 span {
+  color: #b464ff;
+}
+
 body[data-theme="dark"] input[type="url"] {
   background: #0b1233;
   border-color: #334155;
@@ -252,19 +262,22 @@ body[data-theme="dark"] button {
   color: #ffffff;
 }
 
-body[data-theme="dark"] #download-link {
+body[data-theme="dark"] .btn-download {
   background: #22c55e;
   color: #022c22;
 }
 
-body[data-theme="dark"] .action-btn {
+body[data-theme="dark"] .status {
+  color: #ff4242;
+}
+body[data-theme="dark"] .switch-theme-btn {
   background: rgba(9,15,42,0.7);
   border: 1px solid rgba(100, 100, 100, 0.358);
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   color: #f8fafc;
 }
 
-body[data-theme="dark"] .action-btn i {
+body[data-theme="dark"] .switch-theme-btn i {
   color: #f8fafc;
 }
 
