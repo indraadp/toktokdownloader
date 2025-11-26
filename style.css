@@ -69,6 +69,47 @@ input[type="url"]:focus {
   background: #ffffff;
 }
 
+.paste-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.paste-wrapper input {
+  width: 100%;
+  padding-right: 44px;
+}
+
+.paste-btn-in {
+  position: absolute;
+  top: 40%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: #e5e7eb;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.paste-btn-in:hover {
+  background: #f3f4f6;
+  transform: translateY(-50%);
+}
+
+.paste-btn-in:active {
+  background: #d1d5db;
+  transform: translateY(-50%);
+}
+
+.paste-btn-in i {
+  font-size: 14px;
+  color: #111827;
+}
+
 button {
   margin-top: 4px;
   padding: 10px 12px;
@@ -84,6 +125,12 @@ button {
 button:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+button:not(.paste-btn-in):hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .status {
@@ -108,7 +155,7 @@ button:disabled {
 .result h2 {
   font-size: 16px;
   text-align: center;
-  margin-bottom: 10x;
+  margin-bottom: 10px;
   color: #1e293b;
 }
 
@@ -173,12 +220,6 @@ input[type="url"]:hover {
   border-color: #60a5fa;
 }
 
-button:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
 #download-link:hover {
   background: #16a34a;
   color: #022c22;
@@ -190,7 +231,6 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* TOGGLE SWITCH THEME */
 .switch-theme {
   position: fixed;
   top: 20px;
@@ -270,6 +310,7 @@ body[data-theme="dark"] .btn-download {
 body[data-theme="dark"] .status {
   color: #ff4242;
 }
+
 body[data-theme="dark"] .switch-theme-btn {
   background: rgba(9,15,42,0.7);
   border: 1px solid rgba(100, 100, 100, 0.358);
@@ -288,4 +329,3 @@ body[data-theme="dark"] a {
 body[data-theme="dark"] a:hover {
   color: #60a5fa;
 }
-

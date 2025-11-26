@@ -97,3 +97,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+const pasteBtn = document.getElementById("paste-btn");
+const inputUrl = document.getElementById("tiktok-url");
+
+pasteBtn.addEventListener("click", async () => {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (text) {
+      inputUrl.value = text;
+      inputUrl.focus();
+    } else {
+      alert("Clipboard kosong.");
+    }
+  } catch {
+    alert("Gagal mengakses clipboard.");
+  }
+});

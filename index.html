@@ -46,12 +46,18 @@
     <main>
       <form id="download-form">
         <label for="tiktok-url">Paste link TikTok pada kolom di bawah ini, lalu klik <b>Download Video</b>.</label>
-        <input
-          id="tiktok-url"
-          type="url"
-          placeholder="https://vt.tiktok.com/ZSfPc62yc/"
-          required
-        />
+          <div class="paste-wrapper">
+            <input
+              id="tiktok-url"
+              type="url"
+              placeholder="https://vt.tiktok.com/ZSfPc62yc/"
+              required
+            />
+
+  <button type="button" id="paste-btn" class="paste-btn-in">
+    <i class="fa-solid fa-paste"></i>
+  </button>
+</div>
         <button type="submit" id="download-btn">Download Video</button>
       </form>
 
