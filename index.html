@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 
-<script>
-  (function(){
-    // baca cookie site_theme (fast minimal)
-    const m = document.cookie.match('(?:^|; )site_theme=([^;]*)');
-    const theme = m ? decodeURIComponent(m[1]) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme','dark');
-      try{ document.body && document.body.setAttribute('data-theme','dark'); }catch(e){}
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      try{ document.body && document.body.removeAttribute('data-theme'); }catch(e){}
-    }
-  })();
-</script>
-
 <head>
   <meta charset="UTF-8" />
   <title>Toktokdownloader - TikTok Downloader</title>
@@ -24,6 +9,28 @@
   <meta name="description" content="Download video TikTok tanpa watermark, cepat dan gratis.">
   <meta name="robots" content="nofollow, noindex, noimageindex, noarchive, nosnippet"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script>
+(function(){
+  try {
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch(e){ saved = null; }
+    if (!saved) {
+      try { saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; } catch(e){ saved = 'light'; }
+    }
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme','dark');
+      try { document.body && document.body.setAttribute('data-theme','dark'); } catch(e){}
+      try { document.documentElement.style.background = '#090f2a'; document.body && (document.body.style.background = '#090f2a', document.body.style.color = '#f1f5f9'); } catch(e){}
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      try { document.body && document.body.removeAttribute('data-theme'); } catch(e){}
+      try { document.documentElement.style.background = '#dbeafe'; document.body && (document.body.style.background = '#dbeafe', document.body.style.color = '#1e293b'); } catch(e){}
+    }
+  } catch(e){}
+})();
+</script>
+
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -90,66 +97,48 @@
 
   <script src="/script.js"></script>
 
- <script>
-  /* ------------------------------
-      Helper Cookie Functions
-  ------------------------------ */
-  function setCookie(name, value, days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
-  }
+<script>
+(function(){
+  var btn = document.getElementById('modeToggle');
+  var root = document.documentElement;
 
-  function getCookie(name) {
-    const match = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
-    return match ? decodeURIComponent(match[1]) : null;
-  }
-
-  /* ------------------------------
-      Apply Theme From Cookie on Load
-  ------------------------------ */
-  const savedTheme = getCookie("site_theme"); // "dark" or "light"
-  const root = document.body;
-
-  if (savedTheme === "dark") {
-    root.setAttribute("data-theme", "dark");
-  } else {
-    // default light
-    root.removeAttribute("data-theme");
-  }
-
-  /* ------------------------------
-      Toggle Logic + Save to Cookie
-  ------------------------------ */
-  const btn = document.getElementById('modeToggle');
-  const icon = btn.querySelector('i');
-
-  // Set initial icon based on loaded theme
-  function updateIcon() {
-    const isDark = root.getAttribute('data-theme') === 'dark';
-    icon.classList.remove("fa-moon", "fa-sun");
-    icon.classList.add(isDark ? "fa-sun" : "fa-moon");
-  }
-  updateIcon();
-
-  btn.addEventListener('click', () => {
-    const isDark = root.getAttribute('data-theme') === 'dark';
-
-    if (isDark) {
-      // Switch to light mode
-      root.removeAttribute('data-theme');
-      setCookie("site_theme", "light", 365);
+  function setTheme(theme, save) {
+    if (theme === 'dark') {
+      root.setAttribute('data-theme','dark');
+      try { document.body.setAttribute('data-theme','dark'); } catch(e){}
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
     } else {
-      // Switch to dark mode
-      root.setAttribute('data-theme', 'dark');
-      setCookie("site_theme", "dark", 365);
+      root.removeAttribute('data-theme');
+      try { document.body.removeAttribute('data-theme'); } catch(e){}
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
     }
+    if (save) try { localStorage.setItem('theme', theme); } catch(e){}
+  }
 
-    updateIcon();
+  try {
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch(e){ saved = null; }
+    if (!saved) {
+      try { saved = (root.getAttribute('data-theme') === 'dark') ? 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch(e){ saved = 'light'; }
+    }
+    setTheme(saved, false);
+  } catch(e){ setTheme('light', false); }
+
+  if (btn) {
+    btn.addEventListener('click', function(){
+      var cur = (root.getAttribute('data-theme') === 'dark') ? 'dark' : 'light';
+      var next = (cur === 'dark') ? 'light' : 'dark';
+      setTheme(next, true);
+    });
+  }
+
+  // cleanup inline mask after full load so CSS takes over
+  window.addEventListener('load', function(){
+    try { document.documentElement.style.background = ''; if (document.body) { document.body.style.background = ''; document.body.style.color = ''; } } catch(e){}
   });
-</script>
 
+})();
+</script>
 
 </body>
 </html>
