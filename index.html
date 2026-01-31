@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>ToktokDownloader - TikTok Downloader</title>
+  <link href="/favicon/icon32.png" rel="icon" sizes="32x32"/>
+  <link href="/favicon/icon192.png" rel="icon" sizes="192x192"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&amp;display=swap">
+  <meta name="description" content="Download video TikTok tanpa watermark, cepat dan gratis.">
+  <meta name="robots" content="nofollow, noindex, noimageindex, noarchive, nosnippet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script>
+  (function(){
+    try{
+      var saved=null;
+      try{saved=localStorage.getItem('theme')}catch(e){saved=null}
+      if(!saved){
+        try{saved=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'}catch(e){saved='light'}
+      }
+      if(saved==='dark'){
+        document.documentElement.setAttribute('data-theme','dark');
+        try{document.body&&document.body.setAttribute('data-theme','dark')}catch(e){}
+        try{document.documentElement.style.background='#090f2a';document.body&&(document.body.style.background='#090f2a',document.body.style.color='#f1f5f9')}catch(e){}
+      }else{
+        document.documentElement.removeAttribute('data-theme');
+        try{document.body&&document.body.removeAttribute('data-theme')}catch(e){}
+        try{document.documentElement.style.background='#dbeafe';document.body&&(document.body.style.background='#dbeafe',document.body.style.color='#1e293b')}catch(e){}
+      }
+    }catch(e){}
+  })();
+  </script>
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+  <div class="switch-theme">
+    <button id="modeToggle" class="switch-theme-btn" aria-label="switch theme">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="card">
+    <header>
+      <h1><span>Toktok</span>Downloader</h1>
+      <p>Download video TikTok<br/>TANPA WATERMARK, CEPAT, dan GRATIS!!!</p>
+    </header>
+
+    <main>
+      <form id="download-form">
+        <label for="tiktok-url">Paste link TikTok pada kolom di bawah ini, lalu klik tombol <b>Download</b>. Kemudian klik lagi tombol <b>Download Video</b> untuk menyimpan video.</label>
+
+        <div class="paste-wrapper">
+          <input id="tiktok-url" type="url" placeholder="https://vt.tiktok.com/ZSfPc62yc/" required />
+          <button type="button" id="paste-btn" class="paste-btn-in" aria-label="Tempel Link">
+            <i class="fa-solid fa-paste"></i>
+            <span>Tempel Link</span>
+          </button>
+        </div>
+
+        <button type="submit" id="download-btn">Download</button>
+      </form>
+
+      <div id="status" class="status"></div>
+
+      <div id="result" class="result hidden">
+        <h2>Video siap di Download <span style="color: #23d000;">✔</span></h2>
+        <video id="preview" controls></video>
+        <div class="download-wrapper">
+          <button id="download-now" class="btn-download" type="button">Download Video</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Gunakan dengan bijak dan tetap patuhi aturan<br/>
+        <a href="https://www.tiktok.com/legal/page/row/terms-of-service/id" target="_blank" rel="nofollow noopener">Terms of Service TikTok</a>.
+      </p>
+      <div class="credit">
+        <p>Create by. <a href="https://indradp.web.id/" target="_blank" rel="nofollow noopener">Indra DP</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+
+  <script>
+  (function(){
+    var btn=document.getElementById('modeToggle');
+    var root=document.documentElement;
+    function setTheme(theme,save){
+      if(theme==='dark'){
+        root.setAttribute('data-theme','dark');
+        try{document.body.setAttribute('data-theme','dark')}catch(e){}
+        if(btn)btn.innerHTML='<i class="fa-solid fa-sun"></i>';
+      }else{
+        root.removeAttribute('data-theme');
+        try{document.body.removeAttribute('data-theme')}catch(e){}
+        if(btn)btn.innerHTML='<i class="fa-solid fa-moon"></i>';
+      }
+      if(save)try{localStorage.setItem('theme',theme)}catch(e){}
+    }
+    try{
+      var saved=null;
+      try{saved=localStorage.getItem('theme')}catch(e){saved=null}
+      if(!saved){
+        try{saved=(root.getAttribute('data-theme')==='dark')?'dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){saved='light'}
+      }
+      setTheme(saved,false);
+    }catch(e){setTheme('light',false)}
+    if(btn){
+      btn.addEventListener('click',function(){
+        var cur=(root.getAttribute('data-theme')==='dark')?'dark':'light';
+        var next=(cur==='dark')?'light':'dark';
+        setTheme(next,true);
+      });
+    }
+    window.addEventListener('load',function(){
+      try{document.documentElement.style.background='';if(document.body){document.body.style.background='';document.body.style.color='';}}catch(e){}
+    });
+  })();
+  </script>
+
+</body>
+</html>

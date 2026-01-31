@@ -1,0 +1,64 @@
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at top,#dbeafe,#eff6ff);font-family:"Source Sans Pro",sans-serif;color:#1e293b}
+.card{width:100%;max-width:500px;padding:24px 20px 16px;background:#ffffffe6;border-radius:18px;box-shadow:0 12px 40px #0000001f;position:relative}
+header h1{margin:10px auto 1.2em;font-size:2rem;text-align:center;color:#212730}
+header h1 span{color:#3b82f6}
+header p{margin:4px 0 3em;text-align:center;line-height:1.5;color:#212730;font-size:1rem;font-weight:700}
+form{display:flex;flex-direction:column;gap:15px;margin-bottom:12px}
+label{font-size:1rem;line-height:1.5;color:#212730}
+input[type="url"]{padding:16px 16px;border-radius:12px;border:1px solid #94a3b8;background:#f8fafc;color:#1e293b;outline:none;font-size:16px;min-height:56px;transition:border-color .2s,background .2s}
+input[type="url"]:focus{border-color:#3b82f6;background:#fff}
+input[type="url"]:hover{border-color:#60a5fa}
+.paste-wrapper{position:relative;width:100%}
+.paste-wrapper input{width:100%;padding-right:150px}
+.paste-btn-in{position:absolute;inset:0 auto 0 auto;right:10px;margin:auto 0;width:auto;min-width:120px;height:44px;padding:0 12px;background:#e5e7eb;border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.paste-btn-in:hover{background:#f3f4f6}
+.paste-btn-in:active{background:#d1d5db}
+.paste-btn-in i{font-size:18px;color:#111827}
+.paste-btn-in span{font-size:14px;font-weight:700;color:#111827;white-space:nowrap}
+.paste-btn-in[data-mode="clear"]{background:#fee2e2}
+.paste-btn-in[data-mode="clear"]:hover{background:#fecaca}
+.paste-btn-in[data-mode="clear"]:active{background:#fca5a5}
+.paste-btn-in[data-mode="clear"] i,.paste-btn-in[data-mode="clear"] span{color:#991b1b}
+button{margin-top:4px;padding:12px 14px;border-radius:999px;border:none;cursor:pointer;font-size:1.05rem;font-weight:600;background:linear-gradient(to right,#3b82f6,#60a5fa);color:#fff;transition:opacity .2s ease,transform .12s ease,box-shadow .12s ease}
+button:disabled{opacity:.6;cursor:default}
+button:not(.paste-btn-in):hover:not(:disabled){opacity:.9;transform:translateY(-1px);box-shadow:0 4px 12px #3b82f64d}
+.status{min-height:20px;font-size:1rem;color:#00a32e;text-align:center;margin-bottom:8px}
+.result.hidden{display:none}
+.result{display:flex;flex-direction:column;margin-top:5px;padding-top:8px;border-top:1px solid #cbd5e1}
+.result h2{font-size:1rem;text-align:center;margin-bottom:10px;color:#1e293b}
+video{width:100%;border-radius:12px;margin:10px 0;background:#e2e8f0}
+.download-wrapper{display:flex;flex-direction:column;margin-top:8px;text-align:center}
+.btn-download{display:none;padding:12px 20px;border-radius:999px;border:none;cursor:pointer;background:#22c55e;font-size:1.05rem;font-weight:600;color:#fff;box-shadow:0 6px 18px #22c55e2e;transition:.2s ease}
+.btn-download:hover{transform:translateY(-1px)}
+.btn-download:active{transform:translateY(0)}
+.btn-download:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+footer{margin-top:2.5em;font-size:14px;color:#212730;text-align:center}
+footer .credit{font-weight:600;margin-top:3em}
+footer a{text-decoration:none}
+footer a:hover{text-decoration:underline}
+#download-link:hover{background:#16a34a;color:#fff;transform:translateY(-1px);box-shadow:0 4px 10px #22c55e4d}
+.switch-theme{position:fixed;top:20px;right:20px;z-index:200}
+.switch-theme-btn{width:45px;height:45px;border:none;border-radius:20px;background:#ffffffc7;backdrop-filter:blur(10px);box-shadow:0 4px 20px #00000026;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s ease;color:#1e293b}
+.switch-theme-btn i{font-size:22px}
+.switch-theme-btn:hover{transform:scale(1.07)}
+body[data-theme="dark"]{background:#090f2a;color:#f1f5f9}
+body[data-theme="dark"] .card{background:#ffffff0d;color:#f1f5f9;backdrop-filter:blur(6px);box-shadow:0 16px 50px #0009}
+body[data-theme="dark"] header h1,body[data-theme="dark"] header p,body[data-theme="dark"] label,body[data-theme="dark"] .result h2,body[data-theme="dark"] footer{color:#f1f5f9}
+body[data-theme="dark"] header h1 span{color:#b464ff}
+body[data-theme="dark"] input[type="url"]{background:#0b1233;border-color:#334155;color:#f1f5f9}
+body[data-theme="dark"] input[type="url"]:focus{background:#0d1440;border-color:#818cf8}
+body[data-theme="dark"] button{background:linear-gradient(to right,#4f46e5,#9333ea);color:#fff}
+body[data-theme="dark"] .btn-download{background:#22c55e;color:#fff}
+body[data-theme="dark"] .status{color:#eaff00}
+body[data-theme="dark"] .switch-theme-btn{background:#090f2ab3;border:1px solid #6464645b;box-shadow:0 4px 20px #0006;color:#f8fafc}
+body[data-theme="dark"] .switch-theme-btn i{color:#f8fafc}
+body[data-theme="dark"] a{color:#93c5fd}
+body[data-theme="dark"] a:hover{color:#60a5fa}
+body[data-theme="dark"] .paste-btn-in:hover{background:#818cf8}
+body[data-theme="dark"] .paste-btn-in span{color:#0d1440}
+body[data-theme="dark"] .paste-btn-in i{color:#0d1440}
+body[data-theme="dark"] .paste-btn-in[data-mode="clear"]{background:#3f1b1b}
+body[data-theme="dark"] .paste-btn-in[data-mode="clear"]:hover{background:#522020}
+body[data-theme="dark"] .paste-btn-in[data-mode="clear"]:active{background:#642626}
+body[data-theme="dark"] .paste-btn-in[data-mode="clear"] i,body[data-theme="dark"] .paste-btn-in[data-mode="clear"] span{color:#fecaca}
